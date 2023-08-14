@@ -1,0 +1,9 @@
+{
+	"name": "datafactoryricardosc",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ceb615c8-74dc-4713-9844-77950e1f67ae",
+		"tenantId": "f958e84a-92b8-439f-a62d-4f45996b6d07"
+	}
+}
