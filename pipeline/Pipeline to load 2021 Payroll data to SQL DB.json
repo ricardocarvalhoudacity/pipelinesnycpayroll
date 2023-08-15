@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow to load 2021 Payroll Data to SQL DB",
+						"referenceName": "dataflow to load 2021 payroll data to SQL DB",
 						"type": "DataFlowReference"
 					},
 					"compute": {

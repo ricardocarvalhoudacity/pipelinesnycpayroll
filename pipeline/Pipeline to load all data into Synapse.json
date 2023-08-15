@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow load employee to synapse",
+						"referenceName": "dataflow to load employee to synapse",
 						"type": "DataFlowReference"
 					},
 					"staging": {
@@ -47,7 +47,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow load title to synapse",
+						"referenceName": "dataflow to load title to synapse",
 						"type": "DataFlowReference"
 					},
 					"staging": {
@@ -78,7 +78,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow load agency to synapse",
+						"referenceName": "dataflow to load agency to synapse",
 						"type": "DataFlowReference"
 					},
 					"staging": {
@@ -128,7 +128,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "data flow to load 2021 data from SQL DB to Synapse",
+						"referenceName": "data flow to load 2021 payroll data from SQL DB to Synapse",
 						"type": "DataFlowReference"
 					},
 					"staging": {

@@ -1,5 +1,5 @@
 {
-	"name": "dataflow load agency to synapse",
+	"name": "dataflow to load agency to synapse",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

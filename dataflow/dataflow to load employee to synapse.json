@@ -1,5 +1,5 @@
 {
-	"name": "dataflow load employee to synapse",
+	"name": "dataflow to load employee to synapse",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

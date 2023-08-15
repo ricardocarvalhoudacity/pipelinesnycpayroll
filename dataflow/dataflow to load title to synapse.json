@@ -1,5 +1,5 @@
 {
-	"name": "dataflow load title to synapse",
+	"name": "dataflow to load title to synapse",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
