@@ -1,9 +1,9 @@
 {
-	"name": "pipeline transfer nyc_payroll 2021 to sqldb",
+	"name": "pipeline to load 2021 Payroll data to SQL DB",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow transfer nyc_payroll 2021 to sqldb",
+				"name": "data flow to load the 2021 file into SQLDB",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow load nyc_payroll_2021 to sqldb",
+						"referenceName": "data flow to load 2021 Payroll Data to SQL DB",
 						"type": "DataFlowReference"
 					},
 					"compute": {
