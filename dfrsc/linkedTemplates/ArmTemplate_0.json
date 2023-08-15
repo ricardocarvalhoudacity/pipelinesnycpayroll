@@ -190,7 +190,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dls_nycpayroll_2021')]",
+			"name": "[concat(parameters('factoryName'), '/ds_dls_nycpayroll_data_2021')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -296,7 +296,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_sqlddb_nycpayroll')]",
+			"name": "[concat(parameters('factoryName'), '/ds_sqlddb_nycpayroll_data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -602,7 +602,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/data flow to load 2021 Payroll Data to SQL DB')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow to load 2021 Payroll Data to SQL DB')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -611,7 +611,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_dls_nycpayroll_2021",
+								"referenceName": "ds_dls_nycpayroll_data_2021",
 								"type": "DatasetReference"
 							},
 							"name": "sourcedlsnycpayroll2021"
@@ -620,7 +620,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_sqlddb_nycpayroll",
+								"referenceName": "ds_sqlddb_nycpayroll_data",
 								"type": "DatasetReference"
 							},
 							"name": "sinksqldbnycpayrolldata"
@@ -709,8 +709,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_dls_nycpayroll_2021')]",
-				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dls_nycpayroll_data_2021')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll_data')]"
 			]
 		},
 		{
@@ -723,7 +723,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_sqlddb_nycpayroll",
+								"referenceName": "ds_sqlddb_nycpayroll_data",
 								"type": "DatasetReference"
 							},
 							"name": "sourcesqldbnycpayrolldata"
@@ -823,7 +823,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll_data')]",
 				"[concat(variables('factoryId'), '/datasets/ds_synapse_NYC_Payroll_Data')]"
 			]
 		},
@@ -1202,13 +1202,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline to load 2021 Payroll data to SQL DB')]",
+			"name": "[concat(parameters('factoryName'), '/Pipeline to load 2021 Payroll data to SQL DB')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "data flow to load the 2021 file into SQLDB",
+						"name": "dataflow load the 2021 file into SQLDB",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -1221,7 +1221,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "data flow to load 2021 Payroll Data to SQL DB",
+								"referenceName": "dataflow to load 2021 Payroll Data to SQL DB",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1246,7 +1246,7 @@
 				"lastPublishTime": "2023-08-14T01:39:02Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/data flow to load 2021 Payroll Data to SQL DB')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow to load 2021 Payroll Data to SQL DB')]"
 			]
 		}
 	]
