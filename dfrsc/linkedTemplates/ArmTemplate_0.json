@@ -602,6 +602,148 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/table_synapse_nycpayroll_summary')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_synapse",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "FiscalYear",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AgencyName",
+						"type": "varchar"
+					},
+					{
+						"name": "TotalPaid",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NYC_Payroll_Summary"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_synapse')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dls_historical_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_nycpayroll",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "nycpayroll_2020.csv",
+						"folderPath": "dirhistoryfiles",
+						"fileSystem": "adlsnycpayroll-ricardo-c"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "PayrollNumber",
+						"type": "String"
+					},
+					{
+						"name": "AgencyID",
+						"type": "String"
+					},
+					{
+						"name": "AgencyName",
+						"type": "String"
+					},
+					{
+						"name": "EmployeeID",
+						"type": "String"
+					},
+					{
+						"name": "LastName",
+						"type": "String"
+					},
+					{
+						"name": "FirstName",
+						"type": "String"
+					},
+					{
+						"name": "AgencyStartDate",
+						"type": "String"
+					},
+					{
+						"name": "WorkLocationBorough",
+						"type": "String"
+					},
+					{
+						"name": "TitleCode",
+						"type": "String"
+					},
+					{
+						"name": "TitleDescription",
+						"type": "String"
+					},
+					{
+						"name": "LeaveStatusasofJune30",
+						"type": "String"
+					},
+					{
+						"name": "BaseSalary",
+						"type": "String"
+					},
+					{
+						"name": "PayBasis",
+						"type": "String"
+					},
+					{
+						"name": "RegularHours",
+						"type": "String"
+					},
+					{
+						"name": "RegularGrossPaid",
+						"type": "String"
+					},
+					{
+						"name": "OTHours",
+						"type": "String"
+					},
+					{
+						"name": "TotalOTPaid",
+						"type": "String"
+					},
+					{
+						"name": "TotalOtherPay",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_nycpayroll')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow to load 2021 payroll data to SQL DB')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1017,236 +1159,142 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Pipeline to load all data into Synapse')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Dataflow Aggregate Data')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Data flow Employee Master to Synapse",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_sqlddb_nycpayroll_data",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow to load employee to synapse",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcedlsemployee": {},
-									"sinksynapseemployee": {}
-								}
+						{
+							"dataset": {
+								"referenceName": "ds_dls_historical_data",
+								"type": "DatasetReference"
 							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "ls_adls_nycpayroll",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "adlsnycpayroll-ricardo-c/dirstaging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
+							"name": "source2"
 						}
-					},
-					{
-						"name": "Data flow Title Master to Synapse",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "table_synapse_nycpayroll_summary",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "union1"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow to load title to synapse",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcedlstitle": {},
-									"sinksynapsetitle": {}
-								}
-							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "ls_adls_nycpayroll",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "adlsnycpayroll-ricardo-c/dirstaging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "Data flow Agency Master to Synapse",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						{
+							"name": "filter1"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow to load agency to synapse",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcedlsagency": {},
-									"sinksynapseagency": {}
-								}
-							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "ls_adls_nycpayroll",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "adlsnycpayroll-ricardo-c/dirstaging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "Data flow Current Year Data from SQLDB to Synapse",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Data flow Employee Master to Synapse",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Data flow Title Master to Synapse",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Data flow Agency Master to Synapse",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						{
+							"name": "derivedColumn1"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "data flow to load 2021 payroll data from SQL DB to Synapse",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcesqldbnycpayrolldata": {},
-									"sinksynapsenycpayrolldata": {}
-								}
-							},
-							"staging": {
-								"linkedService": {
-									"referenceName": "ls_adls_nycpayroll",
-									"type": "LinkedServiceReference"
-								},
-								"folderPath": "adlsnycpayroll-ricardo-c/dirstaging"
-							},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
+						{
+							"name": "aggregate1"
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-08-14T02:28:17Z"
+					],
+					"scriptLines": [
+						"parameters{",
+						"     dataflow_param_fiscalyear as integer",
+						"}",
+						"source(output(",
+						"          FiscalYear as integer,",
+						"          PayrollNumber as integer,",
+						"          AgencyID as string,",
+						"          AgencyName as string,",
+						"          EmployeeID as string,",
+						"          LastName as string,",
+						"          FirstName as string,",
+						"          AgencyStartDate as date,",
+						"          WorkLocationBorough as string,",
+						"          TitleCode as string,",
+						"          TitleDescription as string,",
+						"          LeaveStatusasofJune30 as string,",
+						"          BaseSalary as double,",
+						"          PayBasis as string,",
+						"          RegularHours as double,",
+						"          RegularGrossPaid as double,",
+						"          OTHours as double,",
+						"          TotalOTPaid as double,",
+						"          TotalOtherPay as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          FiscalYear as integer,",
+						"          PayrollNumber as integer,",
+						"          AgencyID as string,",
+						"          AgencyName as string,",
+						"          EmployeeID as string,",
+						"          LastName as string,",
+						"          FirstName as string,",
+						"          AgencyStartDate as date 'MM/dd/yyyy',",
+						"          WorkLocationBorough as string,",
+						"          TitleCode as string,",
+						"          TitleDescription as string,",
+						"          LeaveStatusasofJune30 as string,",
+						"          BaseSalary as double,",
+						"          PayBasis as string,",
+						"          RegularHours as double,",
+						"          RegularGrossPaid as double,",
+						"          OTHours as double,",
+						"          TotalOTPaid as double,",
+						"          TotalOtherPay as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     preferredIntegralType: 'integer',",
+						"     preferredFractionalType: 'double') ~> source2",
+						"source1, source2 union(byName: true)~> union1",
+						"union1 filter(toInteger(FiscalYear) >= $dataflow_param_fiscalyear) ~> filter1",
+						"filter1 derive(TotalPaid = RegularGrossPaid+TotalOTPaid+TotalOtherPay) ~> derivedColumn1",
+						"derivedColumn1 aggregate(groupBy(AgencyName,",
+						"          FiscalYear),",
+						"     TotalPaid = sum(TotalPaid)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          FiscalYear as integer,",
+						"          AgencyName as string,",
+						"          TotalPaid as double",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     staged: true,",
+						"     allowCopyCommand: true,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          FiscalYear,",
+						"          AgencyName,",
+						"          TotalPaid",
+						"     )) ~> sink1"
+					]
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow to load employee to synapse')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_adls_nycpayroll')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow to load title to synapse')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow to load agency to synapse')]",
-				"[concat(variables('factoryId'), '/dataflows/data flow to load 2021 payroll data from SQL DB to Synapse')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Pipeline to load 2021 Payroll data to SQL DB')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "dataflow load the 2021 file into SQLDB",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow to load 2021 payroll data to SQL DB",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourcedlsnycpayroll2021": {},
-									"sinksqldbnycpayrolldata": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-08-14T01:39:02Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow to load 2021 payroll data to SQL DB')]"
+				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll_data')]",
+				"[concat(variables('factoryId'), '/datasets/ds_dls_historical_data')]",
+				"[concat(variables('factoryId'), '/datasets/table_synapse_nycpayroll_summary')]"
 			]
 		}
 	]
