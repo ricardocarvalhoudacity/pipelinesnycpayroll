@@ -1,0 +1,9 @@
+{
+	"name": "dfrsc",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "eea05ebb-bba9-45e2-8fe0-03af4be810bb",
+		"tenantId": "bb128203-69aa-4dbd-a82a-bcfb09868ec1"
+	}
+}
