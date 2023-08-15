@@ -1,5 +1,5 @@
 {
-	"name": "ds_dls_TitleMaster",
+	"name": "ds_dls_titlemaster",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_nycpayroll",

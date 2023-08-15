@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_dls_AgencyMaster",
+						"referenceName": "ds_dls_agencymaster",
 						"type": "DatasetReference"
 					},
 					"name": "sourcedlsagency"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_synapse_NYC_Payroll_AGENCY_MD",
+						"referenceName": "ds_synapse_nyc_payroll_agency_md",
 						"type": "DatasetReference"
 					},
 					"name": "sinksynapseagency"

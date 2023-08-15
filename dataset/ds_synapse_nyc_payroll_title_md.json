@@ -1,5 +1,5 @@
 {
-	"name": "ds_synapse_NYC_Payroll_TITLE_MD",
+	"name": "ds_synapse_nyc_payroll_title_md",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_synapse",

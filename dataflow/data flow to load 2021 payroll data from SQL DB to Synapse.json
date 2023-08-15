@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_synapse_NYC_Payroll_Data",
+						"referenceName": "ds_synapse_nyc_payroll_data",
 						"type": "DatasetReference"
 					},
 					"name": "sinksynapsenycpayrolldata"

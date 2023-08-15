@@ -1,5 +1,5 @@
 {
-	"name": "ds_dls_EmpMaster",
+	"name": "ds_dls_empmaster",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_nycpayroll",

@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_dls_EmpMaster",
+						"referenceName": "ds_dls_empmaster",
 						"type": "DatasetReference"
 					},
 					"name": "sourcedlsemployee"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_synapse_NYC_Payroll_EMP_MD",
+						"referenceName": "ds_synapse_nyc_payroll_emp_md",
 						"type": "DatasetReference"
 					},
 					"name": "sinksynapseemployee"
