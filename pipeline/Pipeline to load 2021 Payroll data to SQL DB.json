@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "data flow to load the 2021 file into SQLDB",
+				"name": "dataflow load the 2021 file into SQLDB",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
