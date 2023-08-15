@@ -1,5 +1,5 @@
 {
-	"name": "data flow to load 2021 data from SQL DB to Synapse",
+	"name": "Data flow to load 2021 data from SQL DB to Synapse",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

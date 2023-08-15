@@ -128,7 +128,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "data flow to load 2021 data from SQL DB to Synapse",
+						"referenceName": "Data flow to load 2021 data from SQL DB to Synapse",
 						"type": "DataFlowReference"
 					},
 					"staging": {
