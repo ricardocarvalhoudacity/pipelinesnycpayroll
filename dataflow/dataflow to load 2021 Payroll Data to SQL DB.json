@@ -1,5 +1,5 @@
 {
-	"name": "data flow to load 2021 Payroll Data to SQL DB",
+	"name": "dataflow to load 2021 Payroll Data to SQL DB",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
