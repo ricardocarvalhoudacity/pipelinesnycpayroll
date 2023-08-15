@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_dls_nycpayroll_2021",
+						"referenceName": "ds_dls_nycpayroll_data_2021",
 						"type": "DatasetReference"
 					},
 					"name": "sourcedlsnycpayroll2021"
