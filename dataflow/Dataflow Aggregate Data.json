@@ -6,17 +6,17 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_sqlddb_nycpayroll_data",
+						"referenceName": "ds_synapse_nyc_payroll_data",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "synapsepayrolltable"
 				},
 				{
 					"dataset": {
 						"referenceName": "ds_dls_historical_data",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "historyfiles"
 				}
 			],
 			"sinks": [
@@ -25,7 +25,7 @@
 						"referenceName": "table_synapse_nycpayroll_summary",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sinksynapsepayrollsummary"
 				}
 			],
 			"transformations": [
@@ -36,7 +36,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "TotalPaid"
 				},
 				{
 					"name": "aggregate1"
@@ -70,7 +70,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     format: 'table',",
+				"     staged: true) ~> synapsepayrolltable",
 				"source(output(",
 				"          FiscalYear as integer,",
 				"          PayrollNumber as integer,",
@@ -96,11 +97,11 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     preferredIntegralType: 'integer',",
-				"     preferredFractionalType: 'double') ~> source2",
-				"source1, source2 union(byName: true)~> union1",
+				"     preferredFractionalType: 'double') ~> historyfiles",
+				"synapsepayrolltable, historyfiles union(byName: true)~> union1",
 				"union1 filter(toInteger(FiscalYear) >= $dataflow_param_fiscalyear) ~> filter1",
-				"filter1 derive(TotalPaid = RegularGrossPaid+TotalOTPaid+TotalOtherPay) ~> derivedColumn1",
-				"derivedColumn1 aggregate(groupBy(AgencyName,",
+				"filter1 derive(TotalPaid = RegularGrossPaid+TotalOTPaid+TotalOtherPay) ~> TotalPaid",
+				"TotalPaid aggregate(groupBy(AgencyName,",
 				"          FiscalYear),",
 				"     TotalPaid = sum(TotalPaid)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
@@ -125,7 +126,7 @@
 				"          FiscalYear,",
 				"          AgencyName,",
 				"          TotalPaid",
-				"     )) ~> sink1"
+				"     )) ~> sinksynapsepayrollsummary"
 			]
 		}
 	}
