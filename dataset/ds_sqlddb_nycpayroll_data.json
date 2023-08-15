@@ -1,5 +1,5 @@
 {
-	"name": "ds_sqlddb_nycpayroll",
+	"name": "ds_sqlddb_nycpayroll_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_sqldb_nycpayroll",
