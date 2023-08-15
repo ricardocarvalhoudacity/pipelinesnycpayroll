@@ -72,7 +72,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dls_AgencyMaster')]",
+			"name": "[concat(parameters('factoryName'), '/ds_dls_agencymaster')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -110,7 +110,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dls_EmpMaster')]",
+			"name": "[concat(parameters('factoryName'), '/ds_dls_empmaster')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -152,7 +152,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dls_TitleMaster')]",
+			"name": "[concat(parameters('factoryName'), '/ds_dls_titlemaster')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -402,7 +402,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_synapse_NYC_Payroll_AGENCY_MD')]",
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_nyc_payroll_agency_md')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -432,7 +432,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_synapse_NYC_Payroll_Data')]",
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_nyc_payroll_data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -538,7 +538,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_synapse_NYC_Payroll_EMP_MD')]",
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_nyc_payroll_emp_md')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -572,7 +572,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_synapse_NYC_Payroll_TITLE_MD')]",
+			"name": "[concat(parameters('factoryName'), '/ds_synapse_nyc_payroll_title_md')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -602,7 +602,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow to load 2021 Payroll Data to SQL DB')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow to load 2021 payroll data to SQL DB')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -714,7 +714,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/data flow to load 2021 data from SQL DB to Synapse')]",
+			"name": "[concat(parameters('factoryName'), '/data flow to load 2021 payroll data from SQL DB to Synapse')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -732,7 +732,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_synapse_NYC_Payroll_Data",
+								"referenceName": "ds_synapse_nyc_payroll_data",
 								"type": "DatasetReference"
 							},
 							"name": "sinksynapsenycpayrolldata"
@@ -824,11 +824,11 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_sqlddb_nycpayroll_data')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_NYC_Payroll_Data')]"
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_nyc_payroll_data')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow load agency to synapse')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow to load agency to synapse')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -837,7 +837,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_dls_AgencyMaster",
+								"referenceName": "ds_dls_agencymaster",
 								"type": "DatasetReference"
 							},
 							"name": "sourcedlsagency"
@@ -846,7 +846,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_synapse_NYC_Payroll_AGENCY_MD",
+								"referenceName": "ds_synapse_nyc_payroll_agency_md",
 								"type": "DatasetReference"
 							},
 							"name": "sinksynapseagency"
@@ -885,12 +885,12 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_dls_AgencyMaster')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_NYC_Payroll_AGENCY_MD')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dls_agencymaster')]",
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_nyc_payroll_agency_md')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow load employee to synapse')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow to load employee to synapse')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -899,7 +899,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_dls_EmpMaster",
+								"referenceName": "ds_dls_empmaster",
 								"type": "DatasetReference"
 							},
 							"name": "sourcedlsemployee"
@@ -908,7 +908,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_synapse_NYC_Payroll_EMP_MD",
+								"referenceName": "ds_synapse_nyc_payroll_emp_md",
 								"type": "DatasetReference"
 							},
 							"name": "sinksynapseemployee"
@@ -950,12 +950,12 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_dls_EmpMaster')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_NYC_Payroll_EMP_MD')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dls_empmaster')]",
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_nyc_payroll_emp_md')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow load title to synapse')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow to load title to synapse')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -964,7 +964,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_dls_TitleMaster",
+								"referenceName": "ds_dls_titlemaster",
 								"type": "DatasetReference"
 							},
 							"name": "sourcedlstitle"
@@ -973,7 +973,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_synapse_NYC_Payroll_TITLE_MD",
+								"referenceName": "ds_synapse_nyc_payroll_title_md",
 								"type": "DatasetReference"
 							},
 							"name": "sinksynapsetitle"
@@ -1012,12 +1012,12 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_dls_TitleMaster')]",
-				"[concat(variables('factoryId'), '/datasets/ds_synapse_NYC_Payroll_TITLE_MD')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dls_titlemaster')]",
+				"[concat(variables('factoryId'), '/datasets/ds_synapse_nyc_payroll_title_md')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Pipeline Load All Data into Synapse')]",
+			"name": "[concat(parameters('factoryName'), '/Pipeline to load all data into Synapse')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1036,7 +1036,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow load employee to synapse",
+								"referenceName": "dataflow to load employee to synapse",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1072,7 +1072,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow load title to synapse",
+								"referenceName": "dataflow to load title to synapse",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1108,7 +1108,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow load agency to synapse",
+								"referenceName": "dataflow to load agency to synapse",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1163,7 +1163,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "data flow to load 2021 data from SQL DB to Synapse",
+								"referenceName": "data flow to load 2021 payroll data from SQL DB to Synapse",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1194,11 +1194,11 @@
 				"lastPublishTime": "2023-08-14T02:28:17Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow load employee to synapse')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow to load employee to synapse')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_adls_nycpayroll')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow load title to synapse')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow load agency to synapse')]",
-				"[concat(variables('factoryId'), '/dataflows/data flow to load 2021 data from SQL DB to Synapse')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow to load title to synapse')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow to load agency to synapse')]",
+				"[concat(variables('factoryId'), '/dataflows/data flow to load 2021 payroll data from SQL DB to Synapse')]"
 			]
 		},
 		{
@@ -1221,7 +1221,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow to load 2021 Payroll Data to SQL DB",
+								"referenceName": "dataflow to load 2021 payroll data to SQL DB",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1246,7 +1246,7 @@
 				"lastPublishTime": "2023-08-14T01:39:02Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow to load 2021 Payroll Data to SQL DB')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow to load 2021 payroll data to SQL DB')]"
 			]
 		}
 	]
