@@ -1,5 +1,5 @@
 {
-	"name": "Pipeline Load All Data into Synapse",
+	"name": "Pipeline to load all data into Synapse",
 	"properties": {
 		"activities": [
 			{
