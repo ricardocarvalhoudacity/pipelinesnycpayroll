@@ -7,7 +7,16 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "TitleCode",
+				"type": "varchar"
+			},
+			{
+				"name": "TitleDescription",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "NYC_Payroll_TITLE_MD"
